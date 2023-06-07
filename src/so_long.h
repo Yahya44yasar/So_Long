@@ -5,84 +5,81 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyasar <yyasar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/04 10:00:52 by yyasar            #+#    #+#             */
-/*   Updated: 2023/06/04 18:13:07 by yyasar           ###   ########.fr       */
+/*   Created: 2023/06/07 10:06:46 by yyasar            #+#    #+#             */
+/*   Updated: 2023/06/07 16:47:22 by yyasar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "../ft_printf/ft_printf.h"
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
 # include "../libft/libft.h"
 # include "../minilibx/mlx.h"
+# include <stdbool.h>
 # include <fcntl.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+# include <time.h>
 
-# define IMG_SIZE 50 //resim boyutu
-
-typedef struct l_image
+typedef struct s_img
 {
-	char	*adem;
-	char	*salih;
-	char	*yahya;
-	char	*taxi;
-	char	*door;
-	char	*door_open;
-	char	*wire;
-	char	*bg;
-	int		img_w;
-	int		img_h;
-}	t_image;
+	void	*back;
+	void	*loot;
+	void	*player;
+	void	*door;
+	void	*wall;
+	void	*title;
+}t_img;
 
-typedef struct l_int_map
+typedef struct s_data
 {
-	int	l;
-	int	r;
-	int	t;
-	int	b;
-	int	read_count;
-	int	step_count;
-}		t_int_map;
+	void	*mlx;
+	void	*window;
+	int		a;
+	int		enemy_anm_c;
+	int		enemy_x;
+	int		enemy_y;
+	int		val;
+	int		map_x;
+	int		map_y;
+	int		player_x;
+	int		player_y;
+	int		coin;
+	int		player;
+	int		exit;
+	int		ch_coin;
+	int		ch_exit;
+	int		move;
+	char	**map;
+	t_img	*img;
+}t_data;
 
-typedef struct l_data
-{
-	char		**map;
-	char		*mlx;
-	char		*win;
-	char		*map_tmp;
-	int			map_height;
-	int			map_width;
-	int			player_count;
-	int			exit_count;
-	int			wall_count;
-	int			coin_count;
-	int			step_count;
-	int			coin_collected;
-	int			unwanted_character_count;
-	int			exit_x;
-	int			exit_y;
-	int			player_x;
-	int			player_y;
-
-	t_image		img;
-	t_int_map	i_map;
-}	t_data;
-
-void	error(char	*str);
-void	map_control(char **argv, t_data *data);
-void	tmp_control(char *mapname, t_data *data);
-void	ber_control(char *mapname, t_data *data);
-char	*get_next_line(int fd);
-void	size_control(t_data *data);
+void	error(char *str);
+void	check_format(char *mapname, t_data *data);
+void	pce10_control(t_data *g);
 void	wall_control(t_data *data);
-void	min_eleman_control(t_data *data);
-void	mlx_create(t_data *data);
-void	map_read(t_data *data);
-void	map_bacgraunt_put(t_data *data);
-void	map_create(t_data *data);
-void	map_put(int i, int j, t_data *data);
-void	placeholder(t_data *data, int x, int y);
+void	rectangel_control(t_data *data);
+void	control_map(t_data *data);
+void	char_control(t_data *g);
+void	valid_path(t_data *a);
+void	map_edit(t_data *g);
+void	err_map(t_data *g, int x, int y);
+void	coin_check(t_data *g, int x, int y);
+void	exit_check(t_data *err, int x, int y);
+char	*get_next_line(int fd);
+void	*myfree(void *str);
+void	map_init(t_data *data, char *arg1);
+int		find_max_y(char *s, t_data *data);
+void	up(t_data *g);
+void	down(t_data *g);
+void	left(t_data *g);
+void	right(t_data *g);
+int		redraw_map(t_data *g);
+int		exit_hook(t_data *game);
+int		key_func(int code, t_data *g);
+void	create_mlx(t_data *g);
+void	draw_img(t_data *g);
+void	draw_img_ul(t_data *g, int x, int y);
+void	put_img(t_data *g);
 #endif

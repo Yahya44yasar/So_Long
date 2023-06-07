@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyasar <yyasar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/04 10:25:04 by yyasar            #+#    #+#             */
-/*   Updated: 2023/06/04 10:53:00 by yyasar           ###   ########.fr       */
+/*   Created: 2023/06/02 10:18:33 by yyasar            #+#    #+#             */
+/*   Updated: 2023/06/07 14:31:10 by yyasar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	error(char	*str)
+void	error(char *str)
 {
-	printf("!!!ERROR!!! :%s", str);
-	exit(0);
+	printf("!!!ERROR111 --> %s", str);
+	exit (0);
 }
