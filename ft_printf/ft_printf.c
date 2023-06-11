@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyasar <yyasar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/17 16:31:56 by yyasar            #+#    #+#             */
-/*   Updated: 2023/06/04 09:23:47 by yyasar           ###   ########.fr       */
+/*   Created: 2022/12/15 15:44:24 by yyasar            #+#    #+#             */
+/*   Updated: 2022/12/16 14:16:43 by yyasar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,3 +63,23 @@ int	ft_printf(const char *str, ...)
 	va_end(arg);
 	return (len);
 }
+/*
+int	main(void)
+{
+	int		i;
+	int		*a;
+	a = &f;
+	char	s[] = "yahya";	
+	ft_printf("asdfg\n");
+	ft_printf("%%\n");
+	ft_printf("%c\n", 'w');
+	ft_printf("%i\n", f);
+	ft_printf("%d\n", *a);
+	ft_printf("%p\n", a);
+	ft_printf("%s\n", s);
+	ft_printf("%u\n", -456789045);
+	printf("%u\n", -456789045);
+	ft_printf("%x\n", 4444);
+	ft_printf("%X\n**", 4444);
+}
+*/

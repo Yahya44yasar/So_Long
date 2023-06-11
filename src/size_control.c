@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyasar <yyasar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/04 12:10:38 by yyasar            #+#    #+#             */
-/*   Updated: 2023/06/04 13:36:23 by yyasar           ###   ########.fr       */
+/*   Created: 2023/03/09 19:34:58 by yyasar            #+#    #+#             */
+/*   Updated: 2023/06/10 21:19:14 by yyasar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 void	size_control(t_data *data)
 {
-	int		i;
-	int		j;
 	int		fd;
 	char	*line;
+	int		y;
+	int		x;
 
+	y = 0;
 	fd = open(data->map_tmp, O_RDONLY);
 	line = get_next_line(fd);
-	i = 0;
-	j = ft_strlen(line);
+	x = ft_strlen(line);
 	while (1)
 	{
 		free(line);
-		i++;
+		y++;
 		line = get_next_line(fd);
 		if (line[0] == '\0')
 			break ;
-		if (j != ft_strlen(line))
-			error("map is not rectangular");
+		if (x != ft_strlen(line) && line[0] != '\0')
+			err_msg("Error\n-->Map is not rectangular");
 	}
-	if (!*line)
+	if (!line)
 		free(line);
-	data->map_height = i;
-	data->map_width = j - 1;
-	close(fd);
+	data->map_height = y;
+	data->map_width = x - 1;
+	close (fd);
 }
 
 void	wall_control(t_data *data)
@@ -49,30 +49,29 @@ void	wall_control(t_data *data)
 	y = 0;
 	while (x < data->map_width)
 		if (data->map[0][x++] != '1')
-			error("first line wall error");
+			err_msg("Error\n-->The map has to be surrounded by walls");
+	while (y < data->map_height)
+	{
+		if (data->map[y][0] != '1' || data->map[y][data->map_width - 1] != '1')
+			err_msg("Error\n-->The map has to be surrounded by walls");
+		y++;
+	}
 	x = 0;
 	while (x < data->map_width)
 		if (data->map[data->map_height - 1][x++] != '1')
-			error("last line wall error ");
-	while (y < data->map_height)
-		if (data->map[y++][0] != '1')
-			error("left walls error");
-	y = 0;
-	while (y < data->map_height)
-		if (data->map[y++][data->map_width - 1] != '1')
-			error("right walls error");
+			err_msg("Error\n-->The map has to be surrounded by walls");
 }
 
-void	min_eleman_control(t_data *data)
+void	min_element_control(t_data *data)
 {
 	if (data->player_count != 1)
-		error("only one player please");
+		err_msg("Error\n-->There must be 1 player on the map");
 	if (data->exit_count != 1)
-		error("please only one exit");
+		err_msg("Error\n-->There must be 1 exit on the map");
 	if (data->coin_count < 1)
-		error("min one coin");
+		err_msg("Error\n-->Must have at least 1 collectible on the map");
 	if (data->wall_count < 9)
-		error("wrong map");
+		err_msg("Error\n-->Wrong on the map");
 	if (data->unwanted_character_count != 0)
-		error("unrecognized error on map");
+		err_msg("Error\n-->The map must contain only [0,1,E,P,C] characters");
 }

@@ -5,38 +5,38 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyasar <yyasar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/04 17:19:40 by yyasar            #+#    #+#             */
-/*   Updated: 2023/06/04 18:16:01 by yyasar           ###   ########.fr       */
+/*   Created: 2023/03/09 19:34:51 by yyasar            #+#    #+#             */
+/*   Updated: 2023/06/10 20:24:46 by yyasar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static	int	recursive_func(int **int_map, t_data *data, int x, int y)
-{	
-	if (data->map[y][x] == 'P' || data->map[y][x] == 'C')
-		data->i_map.read_count++;
-	if (data->map[y][x + 1] != '1' && int_map[y][x + 1] < 1)
+static int	recur_func(int **int_map, t_data *list, int x, int y)
+{
+	if (list->map[y][x] == 'P' || list->map[y][x] == 'C')
+		list->i_map.read_count++;
+	if (list->map[y][x + 1] != '1' && int_map[y][x + 1] < 1)
 	{
 		int_map[y][x + 1] = int_map[y][x] + 1;
-		data->i_map.r = recursive_func(int_map, data, x + 1, y);
+		list->i_map.r = recur_func(int_map, list, x + 1, y);
 	}
-	if (data->map[y + 1][x] != '1' && int_map[y + 1][x] < 1)
+	if (list->map[y + 1][x] != '1' && int_map[y + 1][x] < 1)
 	{
 		int_map[y + 1][x] = int_map[y][x] + 1;
-		data->i_map.b = recur_func(int_map, data, x, y + 1);
+		list->i_map.b = recur_func(int_map, list, x, y + 1);
 	}
-	if (data->map[y][x - 1] != '1' && int_map[y][x - 1] < 1)
+	if (list->map[y][x - 1] != '1' && int_map[y][x - 1] < 1)
 	{
 		int_map[y][x - 1] = int_map[y][x] + 1;
-		data->i_map.l = recur_func(int_map, data, x - 1, y);
+		list->i_map.l = recur_func(int_map, list, x - 1, y);
 	}
-	if (data->map[y - 1][x] != '1' && int_map[y - 1][x] < 1)
+	if (list->map[y - 1][x] != '1' && int_map[y - 1][x] < 1)
 	{
 		int_map[y - 1][x] = int_map[y][x] + 1;
-		data->i_map.t = recur_func(int_map, data, x, y - 1);
+		list->i_map.t = recur_func(int_map, list, x, y - 1);
 	}
-	if ((data->i_map.r || data->i_map.l || data->i_map.b || data->i_map.t))
+	if ((list->i_map.r || list->i_map.l || list->i_map.b || list->i_map.t))
 		return (1);
 	return (0);
 }
@@ -54,19 +54,20 @@ static void	int_map_free(int **int_map, t_data *list)
 	free(int_map);
 }
 
-void	placeholder(t_data *data, int x, int y)
+void	placeholder(t_data *list, int x, int y)
 {
 	int	**int_map;
 	int	i;
 	int	j;
 
 	i = 0;
-	int_map = (int **)malloc(sizeof(int) * data->map_height);
-	while (i < data->map_height)
+	j = 0;
+	int_map = (int **)malloc(sizeof(int *) * list->map_height);
+	while (i < list->map_height)
 	{
-		int_map[i] = (int *)malloc(sizeof(int) * data->map_width);
+		int_map[i] = (int *)malloc(sizeof(int) * list->map_width);
 		j = 0;
-		while (j < data->map_width)
+		while (j < list->map_width)
 		{
 			int_map[i][j] = 0;
 			j++;
@@ -74,8 +75,8 @@ void	placeholder(t_data *data, int x, int y)
 		i++;
 	}
 	int_map[y][x] = 1;
-	data->i_map.read_count = 0;
-	data->i_map.step_count = 0;
-	recursive_func(int_map, data, x, y);
-	int_map_free(int_map, data);
+	list->i_map.read_count = 0;
+	list->i_map.step_count = 0;
+	recur_func(int_map, list, x, y);
+	int_map_free(int_map, list);
 }

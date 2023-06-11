@@ -1,10 +1,21 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: yyasar <yyasar@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/09 19:35:12 by yyasar            #+#    #+#              #
+#    Updated: 2023/06/10 20:25:20 by yyasar           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = so_long
 OBJECTS = $(shell find ./ -name "*.o")
 A = $(shell find ./ -name "*.a")
 CC = gcc
 
-FLAGS = -framework OpenGL -framework AppKit -L./minilibx -lmlx -g
-CFILES = $(shell find . -name "*.c")
+FLAGS = -framework OpenGL  -framework AppKit -L./minilibx -lmlx -g
 
 Y = "\033[33m"
 R = "\033[31m"
@@ -14,25 +25,27 @@ X = "\033[0m"
 UP = "\033[A"
 CUT = "\033[K"
 
-all :
+CFILES = $(shell find . -name "*.c")
+	
+all:
 	@make -C ./libft
 	@make -C ./ft_printf
 	@make -C ./minilibx
-	$(CC) ./src/*.c ./libft/libft.a ./ft_printf/libftprintf.a $(FLAGS) -o so_long
-	
+	$(CC) ./src/*.c ./libft/libft.a  ./ft_printf/libftprintf.a  $(FLAGS) -o so_long
+
 clean:
 	@rm -f $(OBJECTS)
 	@echo $(R)Removed [$(OBJECTS)]$(X)
 
 fclean: clean
-	@rm -f $(OBJECTS)
+	@rm -f $(NAME)
 	@rm -f $(A)
-	@rm -f $(R)Removed [$(NAME)]$(X)
+	@echo $(R)Removed [$(NAME)]$(X)
 
 re: fclean all
 
 norm:
-	@echo $(Y)[--NORMINETTE CLEAN--]$(G)
+	@echo $(Y)[--NORMINETTE SUCCES %100 CLEAN CODE...]$(G)
 	norminette $(shell find ./src/ -name "*.c")
 
 .PHONY: all clean fclean re

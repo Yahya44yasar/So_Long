@@ -5,52 +5,51 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yyasar <yyasar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/04 10:15:24 by yyasar            #+#    #+#             */
-/*   Updated: 2023/06/04 11:01:29 by yyasar           ###   ########.fr       */
+/*   Created: 2023/03/09 19:34:35 by yyasar            #+#    #+#             */
+/*   Updated: 2023/06/10 20:46:50 by yyasar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ber_control(char *mapname, t_data *data)
+void	ber_control(char *map_name, t_data *data)
 {
-	int	i;
+	int	arg_len;
 
-	i = ft_strlen(mapname[1]);
-	if (mapname[i - 1] != 'r' || mapname[i - 2] != 'e'
-		|| mapname[i - 3] != 'b' || mapname[i - 4] != '.')
-		error(".ber error");
+	arg_len = ft_strlen(map_name);
+	if (map_name[arg_len - 1] != 'r' || map_name[arg_len - 2] != 'e'
+		|| map_name[arg_len - 3] != 'b' || map_name[arg_len - 4] != '.')
+		err_msg("Error\n-->Map file is not .ber");
 }
 
-void	tmp_control(char *mapname, t_data *data)
+void	tmp_control(char *map_name, t_data *data)
 {
 	int		fd;
 	char	*line;
 
-	fd = open(ft_strjoin("map/", mapname), O_RDONLY);
+	fd = open(ft_strjoin("map/", map_name), O_RDONLY);
 	if (fd == -1)
-		error("map not found");
+		err_msg("Error\n-->Map file is not found");
 	line = get_next_line(fd);
-	if (!*line)
-		error("map is empty");
+	if (!line || !line[0])
+		err_msg("Error\n-->Map is Empty");
 	close(fd);
 	free(line);
-	if (!mapname)
-		free(mapname);
+	if (!map_name)
+		free(map_name);
 }
 
 void	map_control(char **argv, t_data *data)
 {
 	char	*map_name;
-	char	*map_name_ber;
+	char	*map_names;
 
 	if (argv[1] == 0)
-		error("no map file");
+		err_msg("Error\n-->No map file");
 	map_name = argv[1];
-	map_name_ber = ft_strjoin("map/", map_name);
-	data->map_tmp = map_name_ber;
-	free(map_name_ber);
+	map_names = ft_strjoin("map/", map_name);
+	data->map_tmp = map_names;
+	free(map_names);
 	ber_control(argv[1], data);
 	tmp_control(argv[1], data);
 }
-
