@@ -6,7 +6,7 @@
 /*   By: yyasar <yyasar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:34:22 by yyasar	           #+#    #+#             */
-/*   Updated: 2023/06/11 01:56:38 by yyasar           ###   ########.fr       */
+/*   Updated: 2023/06/13 20:37:25 by yyasar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static int	real_walking(int y, int x, t_data *data)
 
 static void	step_count(t_data *data)
 {
+	char	*s;
+
 	data->step_count++;
 	ft_printf("Step: %d\r", data->step_count);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.wall,
@@ -48,9 +50,11 @@ static void	step_count(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->win, data->img.wall,
 		2 * IMG_SIZE, 0 * IMG_SIZE);
 	mlx_string_put(data->mlx, data->win, 5, 25,
-		0x00FF0000, "Player Steps: ");
-	mlx_string_put(data->mlx, data->win, 95, 25,
-		0x00FF0000, ft_itoa(data->step_count));
+		0x00FFFFFF, "STEPS: ");
+	s = ft_itoa(data->step_count);
+	mlx_string_put(data->mlx, data->win, 47, 25,
+		0x00FFFFFF, s);
+	free(s);
 }
 
 static	int	walking(int keycode, t_data *data, int x)
@@ -82,7 +86,7 @@ static	int	walking(int keycode, t_data *data, int x)
 int	key_hook(int keycode, t_data *data)
 {
 	if (keycode == 53)
-		err_msg("Exit Success");
+		err_msg("Exit Success", data);
 	else if (keycode == 2 || keycode == 13)
 		walking(keycode, data, 1);
 	else if (keycode == 0 || keycode == 1)

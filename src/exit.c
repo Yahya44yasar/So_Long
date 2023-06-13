@@ -6,13 +6,13 @@
 /*   By: yyasar <yyasar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:34:08 by yyasar            #+#    #+#             */
-/*   Updated: 2023/06/10 20:23:14 by yyasar           ###   ########.fr       */
+/*   Updated: 2023/06/13 19:37:35 by yyasar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	err_msg(char *msg)
+void	err_msg(char *msg, t_data *g)
 {
 	ft_printf("%s", msg);
 	exit(0);
@@ -20,7 +20,7 @@ void	err_msg(char *msg)
 
 int	mouse_hook(int mousecode, t_data *data)
 {
-	err_msg("Exit Success");
+	err_msg("Exit Success", data);
 	return (0);
 }
 
@@ -42,7 +42,9 @@ void	walking_continue(t_data *data)
 void	exit_door(t_data *data)
 {
 	if (data->coin_collected == data->coin_count)
-		err_msg("FINISH");
+	{	
+		err_msg("FINISH", data);
+	}
 	else
 		ft_printf("Sorry, you can't exit.\n");
 }

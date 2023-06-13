@@ -6,7 +6,7 @@
 /*   By: yyasar <yyasar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 19:35:05 by yyasar            #+#    #+#             */
-/*   Updated: 2023/06/11 02:05:22 by yyasar           ###   ########.fr       */
+/*   Updated: 2023/06/11 15:29:57 by yyasar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void		map_create(t_data *data);
 void		size_control(t_data *data);
 void		*myfree(void *str);
 char		*get_next_line(int fd);
-void		err_msg(char *msg);
+void		err_msg(char *msg, t_data *g);
 void		hook(t_data *data);
 int			key_hook(int keycode, t_data *data);
 int			mouse_hook(int mousecode, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: yyasar <yyasar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 15:19:24 by yyasar            #+#    #+#             */
-/*   Updated: 2023/06/10 20:24:18 by yyasar           ###   ########.fr       */
+/*   Updated: 2023/06/13 18:11:27 by yyasar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	mlx_create(t_data *data)
 	min_element_control(data);
 	placeholder(data, data->exit_x, data->exit_y);
 	if (data->i_map.read_count != data->coin_count + 1)
-		err_msg(">>>The map is wrong");
+		err_msg(">>>The map is wrong", data);
 	hook(data);
 	mlx_loop(data->mlx);
 }
